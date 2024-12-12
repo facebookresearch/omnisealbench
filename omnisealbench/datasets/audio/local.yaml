@@ -1,0 +1,4 @@
+name: local
+builder_func: omnisealbench.data.audio.local_dataset.get_local_db
+dataset_dir: None
+file_extension: ".mp3"

@@ -1,0 +1,114 @@
+none:
+  func: omnisealbench.attacks.image_effects.ident
+proportion_01:
+  func: omnisealbench.attacks.image_effects.proportion
+  args: 
+    prop: 0.1
+collage_01:
+  func: omnisealbench.attacks.image_effects.collage
+  args: 
+    scale: 0.1
+crop_01:
+  func: omnisealbench.attacks.image_effects.center_crop
+  args: 
+    scale: 0.1
+crop_02:
+  func: omnisealbench.attacks.image_effects.center_crop
+  args: 
+    scale: 0.2
+crop_05:
+  func: omnisealbench.attacks.image_effects.center_crop
+  args: 
+    scale: 0.5
+rot_10:
+  func: omnisealbench.attacks.image_effects.rotate
+  args:
+    angle: 10
+jpeg_80:
+  func: omnisealbench.attacks.image_effects.jpeg_compress
+  args:
+    quality_factor: 80
+jpeg_40:
+  func: omnisealbench.attacks.image_effects.jpeg_compress
+  args:
+    quality_factor: 50
+brightness_1p5:
+  func: omnisealbench.attacks.image_effects.adjust_brightness
+  args:
+    brightness_factor: 1.5
+brightness_2:
+  func: omnisealbench.attacks.image_effects.adjust_brightness
+  args:
+    brightness_factor: 2
+contrast_1p5:
+  func: omnisealbench.attacks.image_effects.adjust_contrast
+  args:
+    contrast_factor: 1.5
+contrast_2:
+  func: omnisealbench.attacks.image_effects.adjust_contrast
+  args:
+    contrast_factor: 2
+saturation_1p5:
+  func: omnisealbench.attacks.image_effects.adjust_saturation
+  args:
+    saturation_factor: 1.5
+saturation_2:
+  func: omnisealbench.attacks.image_effects.adjust_saturation
+  args:
+    saturation_factor: 2
+sharpness_1p5:
+  func: omnisealbench.attacks.image_effects.adjust_sharpness
+  args:
+    sharpness_factor: 1.5
+sharpness_2:
+  func: omnisealbench.attacks.image_effects.adjust_sharpness
+  args:
+    sharpness_factor: 2
+resize_07:
+  func: omnisealbench.attacks.image_effects.resize
+  args:
+    scale: 0.5
+resize_01:
+  func: omnisealbench.attacks.image_effects.resize
+  args:
+    scale: 0.1
+overlay_text:
+  func: omnisealbench.attacks.image_effects.overlay_text
+  args:
+    text: [76,111,114,101,109,32,73,112,115,117,109]
+hflip:
+  func: omnisealbench.attacks.image_effects.hflip
+perspective_01:
+  func: omnisealbench.attacks.image_effects.perspective
+  args:
+    distortion_scale: 0.1
+perspective_05:
+  func: omnisealbench.attacks.image_effects.perspective
+  args:
+    distortion_scale: 0.5
+median_filter_3:
+  func: omnisealbench.attacks.image_effects.median_filter
+  args:
+    kernel_size: 3
+median_filter_7:
+  func: omnisealbench.attacks.image_effects.median_filter
+  args:
+    kernel_size: 7
+hue_m01:
+  func: omnisealbench.attacks.image_effects.adjust_hue
+  args:
+    hue_factor: -0.1
+hue_p01:
+  func: omnisealbench.attacks.image_effects.adjust_hue
+  args:
+    hue_factor: 0.1
+gaussian_blur_3:
+  func: omnisealbench.attacks.image_effects.gaussian_blur
+  args:
+    kernel_size: 3
+gaussian_blur_17:
+  func: omnisealbench.attacks.image_effects.gaussian_blur
+  args:
+    kernel_size: 17
+comb:
+  func: omnisealbench.attacks.image_effects.comb

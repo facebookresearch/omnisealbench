@@ -1,0 +1,17 @@
+speed:
+  num_workers: 4
+random_noise:
+  noise_std: [0.001, 0.01, 0.1, 0.3]
+pink_noise:
+  noise_std: [0.01, 0.05, 0.1, 0.2, 0.3]
+lowpass_filter:
+  cutoff_freq: [500, 1000, 2000, 3000, 4000, 5000]
+highpass_filter:
+  cutoff_freq: [500, 1000, 2000, 4000, 8000]
+# bandpass_filter TODO
+boost_audio:
+  amount: [20, 30, 40, 50, 60, 70, 80, 90]
+duck_audio:
+  amount: [20, 30, 40, 50, 60, 70, 80, 90]
+shush:
+  fraction: [0.001, 0.01, 0.1, 0.3]

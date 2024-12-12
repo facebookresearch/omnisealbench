@@ -1,0 +1,14 @@
+# Copyright (c) Meta Platforms, Inc. and affiliates.
+# All rights reserved.
+#
+# This source code is licensed under the BSD-style license found in the
+# LICENSE file in the root directory of this source tree.
+ 
+# optional
+name: "dctdwt"
+
+# required
+builder_func: omnisealbench.models.image.builders.build_dct_dwt_watermark
+
+# nbits: Number of bits in the watermark message.
+nbits: 48

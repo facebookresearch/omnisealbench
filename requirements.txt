@@ -1,0 +1,12 @@
+numpy
+omegaconf
+julius
+pesq
+fire
+torch>=1.13.0
+wavmark
+datasets
+lipis
+scikit-image
+torchmetrics
+cycler

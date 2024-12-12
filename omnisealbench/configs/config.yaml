@@ -1,0 +1,78 @@
+watermarking_config:
+  audio:
+    # max_length_in_seconds: Maximum length of the audio sequence (in seconds) to be watermarked.
+    max_length_in_seconds: 5
+      
+    # sample_rate: The sample rate of the audio files in Hertz (Hz). This should match the sample rate of the audio
+    # files to ensure that the watermarking process does not alter the pitch or speed of the audio.
+    sample_rate: 16000
+  image:
+
+datasets:
+  audio:
+    - ravdess
+    - voxpopuli
+    # - path/to/audio/dataset/files
+  image:
+    - /datasets01/COCO/060817/val2014    
+
+models:
+  audio:
+    - audioseal # cardname
+    - wavmark # cardname
+    - timbre # cardname
+    # - ./omnisealbench/cards/wavmark.yaml # yaml files
+  image:
+    - dct_dwt
+    - fnns
+    - hidden
+    - ssl
+    - trustmark
+    - wam
+
+attacks:
+  audio:
+    - speed
+    - updownresample
+    - echo
+    - random_noise
+    - lowpass_filter
+    - highpass_filter
+    - bandpass_filter
+    - smooth
+    - boost_audio
+    - duck_audio
+    - identity
+    - shush
+  image:
+    - none
+    - proportion_01
+    - collage_01
+    - crop_01
+    - crop_02
+    - crop_05
+    - rot_10
+    - jpeg_80
+    - jpeg_40
+    - brightness_1p5
+    - brightness_2
+    - contrast_1p5
+    - contrast_2
+    - saturation_1p5
+    - saturation_2
+    - sharpness_1p5
+    - sharpness_2
+    - resize_07
+    - resize_01
+    - overlay_text
+    - hflip
+    - perspective_01
+    - perspective_05
+    - median_filter_3
+    - median_filter_7
+    - hue_m01
+    - hue_p01
+    - gaussian_blur_3
+    - gaussian_blur_17
+    - comb
+

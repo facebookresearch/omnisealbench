@@ -1,0 +1,3 @@
+name: local
+builder_func: omnisealbench.data.image.image_folder.get_local_image_folder
+dataset_dir: None

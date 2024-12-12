@@ -1,0 +1,19 @@
+# Copyright (c) Meta Platforms, Inc. and affiliates.
+# All rights reserved.
+#
+# This source code is licensed under the BSD-style license found in the
+# LICENSE file in the root directory of this source tree.
+ 
+# optional
+name: "ssl"
+
+# required
+builder_func: omnisealbench.models.image.builders.build_ssl_watermark
+
+# nbits: Number of bits in the watermark message.
+nbits: 48
+
+# alpha: The scaling factor for the watermark distortion.
+lambda_w: 1.3
+
+decoder_path: "../../checkpoints/hidden/decoder_48b.torchscript.pt"
