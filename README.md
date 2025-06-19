@@ -18,7 +18,7 @@ For detailed information about the models and metrics used in OmniSealBench, ple
 To quickly perform watermarking generation and evaluation on RAVDESS:
 
 ```bash
-pip install omnisealbench --upgrade
+pip install --upgrade "git+https://github.com/facebookresearch/omnisealbench.git"
 omnisealbench.evaluation --eval_type [image|audio] # required to specify the evaluation modality
                          --config "config file path.yaml" # optional, by default it is using the existing configuration
                          --model "config file path.yaml" or name from the datacards/models folder # by default it evalues all the registered models
