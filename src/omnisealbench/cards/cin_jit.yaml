@@ -1,0 +1,20 @@
+# Copyright (c) Meta Platforms, Inc. and affiliates.
+# All rights reserved.
+#
+# This source code is licensed under the BSD-style license found in the
+# LICENSE file in the root directory of this source tree.
+ 
+# optional
+name: "cin_jit"
+
+# required
+generator:
+  builder_func: omnisealbench.models.cin_jit.build_generator
+  scaler: 1.0
+  nbits: 30
+  model_card_or_path: '${OMNISEAL_CHECKPOINTS}/cin_jit/cin_nsm_encoder.pt'
+
+detector:
+  builder_func: omnisealbench.models.cin_jit.build_detector
+  detection_bits: 16
+  model_card_or_path: '${OMNISEAL_CHECKPOINTS}/cin_jit/cin_nsm_decoder.pt'

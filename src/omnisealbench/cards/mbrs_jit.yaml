@@ -1,0 +1,21 @@
+# Copyright (c) Meta Platforms, Inc. and affiliates.
+# All rights reserved.
+#
+# This source code is licensed under the BSD-style license found in the
+# LICENSE file in the root directory of this source tree.
+ 
+# optional
+name: "mbrs_jit"
+
+generator:
+  # required
+  builder_func: omnisealbench.models.mbrs_jit.build_generator
+  model_card_or_path: '${OMNISEAL_CHECKPOINTS}/mbrs_jit/mbrs_256_m256_encoder.pt'
+  scaler: 1.0
+  nbits: 256
+
+detector:
+  builder_func: omnisealbench.models.mbrs_jit.build_detector
+  model_card_or_path: '${OMNISEAL_CHECKPOINTS}/mbrs_jit/mbrs_256_m256_decoder.pt'
+  detection_bits: 16
+  nbits: 256

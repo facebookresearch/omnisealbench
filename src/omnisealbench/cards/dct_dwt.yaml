@@ -1,0 +1,24 @@
+# Copyright (c) Meta Platforms, Inc. and affiliates.
+# All rights reserved.
+#
+# This source code is licensed under the BSD-style license found in the
+# LICENSE file in the root directory of this source tree.
+ 
+# optional
+name: "dctdwt"
+
+__deps__:
+  - invisible-watermark
+
+generator:
+  # required
+  builder_func: omnisealbench.models.dctdwt.build_generator
+  nbits: 48
+
+detector:
+  # required
+  builder_func: omnisealbench.models.dctdwt.build_detector
+  wm_type: bits
+  nbits: 48
+  detection_bits: 16
+

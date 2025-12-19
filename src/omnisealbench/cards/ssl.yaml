@@ -1,0 +1,27 @@
+# Copyright (c) Meta Platforms, Inc. and affiliates.
+# All rights reserved.
+#
+# This source code is licensed under the BSD-style license found in the
+# LICENSE file in the root directory of this source tree.
+ 
+# optional
+name: "ssl"
+
+__deps__:
+  - invisible-watermark
+
+
+# required
+builder_func: omnisealbench.models.sslwm.build_model
+
+model_card_or_path: '${OMNISEAL_CHECKPOINTS}/ssl/dino_r50_90_plus_w.torchscript.pt'
+
+# nbits: Number of bits in the watermark message.
+nbits: 48
+nsteps: 10
+
+# alpha: The scaling factor for the watermark distortion.
+lambda_w: 1.3
+
+data_aug: "none"
+detection_bits: 16

@@ -1,0 +1,27 @@
+# Copyright (c) Meta Platforms, Inc. and affiliates.
+# All rights reserved.
+#
+# This source code is licensed under the BSD-style license found in the
+# LICENSE file in the root directory of this source tree.
+ 
+# optional
+name: "wam"
+
+__deps__:
+  - timm
+  - einops
+  - opencv-python
+
+# required
+builder_func: omnisealbench.models.wam.build_model
+
+model_card_or_path: "${OMNISEAL_CHECKPOINTS}/wam/wam_mit.pth"
+do_attenuation: True
+embedder_model: "vae_small"
+extractor_model: "sam_base"
+color: "blue"
+nbits: 32
+
+# alpha: The scaling factor for the watermark distortion.
+scaling_w: 2.0
+detection_bits: 16

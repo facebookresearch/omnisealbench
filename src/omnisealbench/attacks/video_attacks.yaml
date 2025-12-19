@@ -1,0 +1,95 @@
+HorizontalFlip:
+  func: omnisealbench.attacks.geometric.HorizontalFlip
+Rotate:
+  func: omnisealbench.attacks.geometric.Rotate
+  args:
+    angle: [10, 90]
+Resize:
+  func: omnisealbench.attacks.geometric.Resize
+  args:
+    size: [0.55, 0.71]
+Crop:
+  func: omnisealbench.attacks.geometric.Crop
+  args:
+    size: [0.55, 0.71]
+Perspective:
+  func: omnisealbench.attacks.geometric.Perspective
+  category: Geometric
+  args:
+    distortion_scale: [0.5]
+Brightness:
+  func: omnisealbench.attacks.valuemetric.Brightness
+  category: Visual
+  args:
+    factor: [0.5, 1.5]
+Contrast:
+  func: omnisealbench.attacks.valuemetric.Contrast
+  args:
+    factor: [0.5, 1.5]
+Saturation:
+  func: omnisealbench.attacks.valuemetric.Saturation
+  args:
+    factor: [0.5, 1.5]
+Hue:
+  func: omnisealbench.attacks.valuemetric.Hue
+  args:
+    factor: [0.25]
+Grayscale:
+  func: omnisealbench.attacks.valuemetric.Grayscale
+JPEG:
+  func: omnisealbench.attacks.valuemetric.JPEG
+  args:
+    quality: [40]
+GaussianBlur:
+  func: omnisealbench.attacks.valuemetric.GaussianBlur
+  args:
+    kernel_size: [9]
+MedianFilter:
+  func: omnisealbench.attacks.valuemetric.MedianFilter
+  args:
+    kernel_size: [9]
+H264:
+  func: omnisealbench.attacks.video.H264
+  args:
+    crf: [23, 30, 40, 50]
+  device: cpu
+H264rgb:
+  func: omnisealbench.attacks.video.H264rgb
+  args:
+    crf: [23, 30, 40, 50]
+  device: cpu
+H265:
+  func: omnisealbench.attacks.video.H265
+  args:
+    crf: [23, 30, 40, 50]  # crf > 50 is not valid
+  device: cpu
+VP9:
+  func: omnisealbench.attacks.video.VP9
+  device: cpu
+  args:
+    crf: [-1]  # crf > 50 is not valid
+  device: cpu
+H264_Crop_Brightness0:
+  func: omnisealbench.attacks.mixed_video.H264_Crop_Brightness
+  args:
+    xargs:
+      - [23, 0.71, 0.5]
+  device: cpu
+H264_Crop_Brightness1:
+  func: omnisealbench.attacks.mixed_video.H264_Crop_Brightness
+  args:
+    xargs:
+      - [30, 0.71, 0.5]
+  device: cpu
+H264_Crop_Brightness2:
+  func: omnisealbench.attacks.mixed_video.H264_Crop_Brightness
+  args:
+    xargs:
+      - [40, 0.71, 0.5]
+  device: cpu
+H264_Crop_Brightness3:
+  func: omnisealbench.attacks.mixed_video.H264_Crop_Brightness
+  args:
+    xargs:
+      - [50, 0.71, 0.5]
+  device: cpu

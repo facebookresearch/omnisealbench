@@ -1,0 +1,20 @@
+updownresample:
+  func: omnisealbench.attacks.audio_effects.AudioEffects.updownresample
+bandpass_filter:
+  func: omnisealbench.attacks.audio_effects.AudioEffects.bandpass_filter  
+speed_julius:
+  func: omnisealbench.attacks.audio_effects.AudioEffects.speed_julius
+  args:
+      speed: [1.25]
+pink_noise:
+  func: omnisealbench.attacks.audio_effects.AudioEffects.pink_noise
+  args:
+      noise_std: [1.0]
+lowpass_filter:
+  func: omnisealbench.attacks.audio_effects.AudioEffects.lowpass_filter
+  args:
+      cutoff_freq: [5000]
+mp3_compression:
+  func: omnisealbench.attacks.audio_effects.AudioEffects.mp3_compression
+  args:
+      bitrate: ["256k"]

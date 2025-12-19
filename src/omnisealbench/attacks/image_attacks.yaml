@@ -1,0 +1,66 @@
+proportion:
+  func: omnisealbench.attacks.image_effects.proportion
+  args:
+    prop: [0.05, 0.1, 0.2, 0.5, 1.0]
+collage:
+  func: omnisealbench.attacks.image_effects.collage
+  args: 
+    scale: [0.05, 0.1, 0.2, 0.5, 1.0]
+center_crop:
+  func: omnisealbench.attacks.image_effects.center_crop
+  args: 
+    scale: [0.05, 0.1, 0.2, 0.5, 1.0]
+rotate:
+  func: omnisealbench.attacks.image_effects.rotate
+  args:
+    angle: [5, 10, 30, 45, 90]
+jpeg:
+  func: omnisealbench.attacks.valuemetric.JPEG
+  args:
+    quality: [40, 50, 60, 70, 80, 90]
+brightness:
+  func: omnisealbench.attacks.image_effects.adjust_brightness
+  args:
+    brightness_factor: [0.1, 0.25, 0.5, 0.75, 1.0, 1.25, 1.5, 1.75, 2.0]
+contrast:
+  func: omnisealbench.attacks.image_effects.adjust_contrast
+  args:
+    contrast_factor: [0.1, 0.25, 0.5, 0.75, 1.0, 1.25, 1.5, 1.75, 2.0]
+saturation:
+  func: omnisealbench.attacks.image_effects.adjust_saturation
+  args:
+    saturation_factor: [0.1, 0.25, 0.5, 0.75, 1.0, 1.25, 1.5, 1.75, 2.0]
+sharpness:
+  func: omnisealbench.attacks.image_effects.adjust_sharpness
+  args:
+    sharpness_factor: [0.1, 0.25, 0.5, 0.75, 1.0, 1.25, 1.5, 1.75, 2.0]
+resize:
+  func: omnisealbench.attacks.image_effects.resize
+  args:
+    scale: [0.32, 0.45, 0.55, 0.63, 0.71, 0.77, 0.84, 0.89, 0.95, 1.00]
+overlay_text:
+  func: omnisealbench.attacks.image_effects.overlay_text
+hflip:
+  func: omnisealbench.attacks.image_effects.hflip
+perspective:
+  func: omnisealbench.attacks.image_effects.perspective
+  args:
+    distortion_scale: [0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8]
+median_filter:
+  func: omnisealbench.attacks.image_effects.median_filter
+  args:
+    kernel_size: [3, 5, 9, 13, 17]
+hue:
+  func: omnisealbench.attacks.image_effects.adjust_hue
+  args:
+    hue_factor: [-0.4, -0.3, -0.2, -0.1, 0.0, 0.1, 0.2, 0.3, 0.4, 0.5]
+gaussian_blur:
+  func: omnisealbench.attacks.image_effects.gaussian_blur
+  args:
+    kernel_size: [3, 5, 9, 13, 17]
+comb:
+  func: omnisealbench.attacks.mixed_image.JPEG_Crop_Brightness
+  category: geometric
+  args:
+    xargs:
+      - [0.5, 1.5, 80]

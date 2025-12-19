@@ -1,0 +1,21 @@
+# Copyright (c) Meta Platforms, Inc. and affiliates.
+# All rights reserved.
+#
+# This source code is licensed under the BSD-style license found in the
+# LICENSE file in the root directory of this source tree.
+ 
+# optional
+name: "invismark"
+__deps__:
+   - invisible-watermark
+   - bchlib
+
+# required
+builder_func: omnisealbench.models.invismark.build_model
+
+detection_bits: 16
+
+# nbits: Number of bits in the watermark message.
+nbits: 100
+
+model_card_or_path: ${OMNISEAL_CHECKPOINTS}/invismark/paper.ckpt

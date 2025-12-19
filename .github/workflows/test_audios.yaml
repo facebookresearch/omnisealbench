@@ -1,0 +1,253 @@
+
+name: Test Audio Models
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+on:
+  push:
+    branches: [ "main" ]
+    paths:
+      - "**"
+  pull_request:
+    branches: [ "main" ]
+    paths:
+      - "**"
+
+jobs:
+  pre_check:
+    runs-on: ubuntu-latest
+    outputs:
+      image_or_video: ${{ steps.filter.outputs.image_or_video }}
+      audio: ${{ steps.filter.outputs.audio }}
+    steps:
+      - uses: actions/checkout@v4
+      - id: filter
+        uses: dorny/paths-filter@v3
+        with:
+          filters: |
+            image_or_video:
+              - 'src/omnisealbench/**/*image*'
+              - 'src/omnisealbench/**/image/**'
+              - 'src/omnisealbench/**/image.py'
+              - 'src/omnisealbench/**/*video*'
+              - 'src/omnisealbench/**/video/**'
+              - 'src/omnisealbench/**/video.py'
+            audio:
+              - 'src/omnisealbench/**/*audio*'
+              - 'src/omnisealbench/**/audio/**'
+              - 'src/omnisealbench/**/audio.py'
+  test_common_functions:
+    needs: pre_check
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    strategy:
+      fail-fast: false
+      matrix:
+        python-version: ["3.10"]
+    if: needs.pre_check.outputs.image_or_video != 'true' || needs.pre_check.outputs.audio == 'true'
+    steps:
+      - uses: actions/checkout@v4
+      - name: Set up Python ${{ matrix.python-version }}
+        uses: actions/setup-python@v5
+        with:
+          python-version: ${{ matrix.python-version }}
+          cache: "pip"
+      - name: Create audio venv
+        run: |
+          python -m venv .venv_audio
+          echo "$GITHUB_WORKSPACE/.venv_audio/bin" >> $GITHUB_PATH
+      - name: Install dependencies
+        run: |          
+          source .venv_audio/bin/activate
+          sudo apt-get update
+          sudo apt-get install -y ffmpeg --fix-missing
+          python -m pip install --upgrade pip
+          pip install --no-cache-dir "numpy<2"
+          pip install --no-cache-dir torch==2.2.2+cpu torchvision==0.17.2+cpu torchaudio==2.2.2+cpu --extra-index-url https://download.pytorch.org/whl/cpu
+          pip install -e '.[audio]'
+          pip install pytest
+      - name: Run tests
+        run: |
+          pytest -s -v tests/audio/test_dataset.py
+          pytest -s -v tests/audio/test_metrics.py
+  
+  test_model:
+    needs: pre_check
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    strategy:
+      fail-fast: false
+      matrix:
+        python-version: ["3.10"]
+        model_name: [ audioseal, timbre, wavmark_fast ]
+    if: needs.pre_check.outputs.image_or_video != 'true' || needs.pre_check.outputs.audio == 'true'
+    steps:
+      - uses: actions/checkout@v4
+      - name: Run tests for ${{ matrix.model_name }}
+        uses: actions/setup-python@v5
+        with:
+          python-version: ${{ matrix.python-version }}
+          cache: "pip"
+      - name: Create audio venv
+        run: |
+          python -m venv .venv_audio
+          echo "$GITHUB_WORKSPACE/.venv_audio/bin" >> $GITHUB_PATH
+      - name: Install dependencies
+        run: |
+          source .venv_audio/bin/activate
+          sudo apt-get update
+          sudo apt-get install -y ffmpeg --fix-missing
+          python -m pip install --upgrade pip
+          pip install --no-cache-dir "numpy<2"
+          pip install --no-cache-dir torch==2.2.2+cpu torchvision==0.17.2+cpu torchaudio==2.2.2+cpu --extra-index-url https://download.pytorch.org/whl/cpu
+          pip install -e '.[audio]'
+      - name: Install AudioSeal
+        if: matrix.model_name == 'audioseal'
+        run: |
+          source .venv_audio/bin/activate
+          pip install audioseal
+      - name: Install wavmark
+        if: matrix.model_name == 'wavmark_fast'
+        run: |
+          source .venv_audio/bin/activate
+          pip install wavmark
+      - name: Download audio models
+        if: matrix.model_name == 'timbre'
+        run: |
+          source .venv_audio/bin/activate
+          mkdir -p checkpoints
+          export OMNISEAL_CHECKPOINTS=checkpoints
+          export OMNISEAL_MODEL=${{ matrix.model_name }}
+          pip install gdown
+          bash scripts/download_audio_models.sh
+      - name: Run model tests for ${{ matrix.model_name }}
+        run: |
+          source .venv_audio/bin/activate
+          mkdir -p checkpoints
+          pip install pytest
+          OMNISEAL_CHECKPOINTS=checkpoints pytest -s -v tests/audio/test_models.py::test_load_${{ matrix.model_name }}
+      - name: Test `omniseal info model`
+        run: |
+          source .venv_audio/bin/activate
+          mkdir -p checkpoints
+          echo "Testing 'omniseal info model' with all audio models:"
+          output=$(bash -c 'OMNISEAL_CHECKPOINTS=checkpoints omniseal info model ${{ matrix.model_name }}')
+          if echo "$output" | grep -q "Error:"; then
+            echo "::error::Command failed with output: $output"
+            exit 1
+          fi
+          echo "Command succeeded with output: $output"
+      - name: Cleanup checkpoints and results
+        if: always()
+        run: |
+          rm -rf checkpoints results/audio results_audio .venv_audio "$HOME/.cache/torch"
+
+  test_e2e:
+    needs: pre_check
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    strategy:
+      fail-fast: false
+      matrix:
+        python-version: ["3.10"]
+    if: needs.pre_check.outputs.image_or_video != 'true' || needs.pre_check.outputs.audio == 'true'
+    steps:
+      - uses: actions/checkout@v4
+      - name: Run tests for ${{ matrix.model_name }}
+        uses: actions/setup-python@v5
+        with:
+          python-version: ${{ matrix.python-version }}
+          cache: "pip"
+      - name: Create audio venv
+        run: |
+          python -m venv .venv_audio
+          echo "$GITHUB_WORKSPACE/.venv_audio/bin" >> $GITHUB_PATH
+      - name: Install dependencies
+        run: |
+          source .venv_audio/bin/activate
+          sudo apt-get update
+          sudo apt-get install -y ffmpeg --fix-missing
+          python -m pip install --upgrade pip
+          pip install --no-cache-dir "numpy<2"
+          pip install --no-cache-dir torch==2.2.2+cpu torchvision==0.17.2+cpu torchaudio==2.2.2+cpu --extra-index-url https://download.pytorch.org/whl/cpu
+          pip install -e '.[audio]'
+          pip install audioseal
+      # - name: Download audio models
+      #   run: |
+      #     mkdir -p checkpoints
+      #     export OMNISEAL_CHECKPOINTS=checkpoints
+      #     pip install gdown
+      #     bash scripts/download_audio_models.sh
+      - name: Run example end-to-end API tests for AudioSeal and Timbre
+        run: |
+          source .venv_audio/bin/activate
+          pip install pytest
+          OMNISEAL_CHECKPOINTS=checkpoints pytest -s -v "tests/audio/test_api.py"
+      - name: Cleanup checkpoints and results
+        if: always()
+        run: |
+          rm -rf checkpoints results/audio results_audio .venv_audio "$HOME/.cache/torch"
+
+  test_cli:
+    needs: pre_check
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    strategy:
+      fail-fast: false
+      matrix:
+        python-version: ["3.10"]
+    if: needs.pre_check.outputs.image_or_video != 'true' || needs.pre_check.outputs.audio == 'true'
+    steps:
+      - uses: actions/checkout@v4
+      - name: Set up Python ${{ matrix.python-version }}
+        uses: actions/setup-python@v5
+        with:
+          python-version: ${{ matrix.python-version }}
+          cache: "pip"
+      - name: Create audio venv
+        run: |
+          python -m venv .venv_audio
+          echo "$GITHUB_WORKSPACE/.venv_audio/bin" >> $GITHUB_PATH
+      - name: maybe run CLI
+        id: decide
+        run: |
+          import random
+          if random.random() < 0.3:
+              print("::set-output name=run_job::true")
+          else:
+              print("::set-output name=run_job::false")
+        shell: python
+      - name: Install dependencies
+        if: steps.decide.outputs.run_job == 'true'
+        run: |
+          source .venv_audio/bin/activate
+          sudo apt-get update
+          sudo apt-get install -y ffmpeg --fix-missing
+          python -m pip install --upgrade pip
+          pip install --no-cache-dir "numpy<2"
+          pip install --no-cache-dir torch==2.2.2+cpu torchvision==0.17.2+cpu torchaudio==2.2.2+cpu --extra-index-url https://download.pytorch.org/whl/cpu
+          pip install -e '.[audio]'
+      - name: Download image models
+        if: steps.decide.outputs.run_job == 'true'
+        run: |
+          source .venv_audio/bin/activate
+          mkdir -p checkpoints
+          export OMNISEAL_CHECKPOINTS=checkpoints
+          pip install gdown
+          bash scripts/download_audio_models.sh
+      - name: Run CLI tests for audio
+        if: steps.decide.outputs.run_job == 'true'
+        run: |
+          source .venv_audio/bin/activate
+          echo "Testing 'omniseal eval audio' with all audio models:"
+          output=$(bash -c 'OMNISEAL_CHECKPOINTS=checkpoints omniseal eval audio --dataset_type=local --dataset_dir=examples/audios --result_dir=results/audio --attacks=tests/audio/audio_attacks_mini.yaml')
+          if echo "$output" | grep -q "Error:"; then
+            echo "::error::Command failed with output: $output"
+            exit 1
+          fi
+          echo "Command succeeded with output: $output"
+      - name: Cleanup checkpoints and results
+        if: always()
+        run: |
+          rm -rf checkpoints results/audio results_audio .venv_audio "$HOME/.cache/torch"

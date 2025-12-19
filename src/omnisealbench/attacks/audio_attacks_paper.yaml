@@ -1,0 +1,46 @@
+identity:
+  func: omnisealbench.attacks.audio_effects.AudioEffects.identity
+updownresample:
+  func: omnisealbench.attacks.audio_effects.AudioEffects.updownresample
+bandpass_filter:
+  func: omnisealbench.attacks.audio_effects.AudioEffects.bandpass_filter
+speed:
+  func: omnisealbench.attacks.audio_effects.AudioEffects.speed
+  speed_factor: [1.25]
+speed_julius:
+  func: omnisealbench.attacks.audio_effects.AudioEffects.speed_julius
+  speed: [1.25]
+echo:
+  func: omnisealbench.attacks.audio_effects.AudioEffects.echo
+  volume: [0.5]
+  duration: [0.5]
+random_noise:
+  func: omnisealbench.attacks.audio_effects.AudioEffects.random_noise
+  noise_std: [0.05]
+pink_noise:
+  func: omnisealbench.attacks.audio_effects.AudioEffects.pink_noise
+  noise_std: [0.1]
+lowpass_filter:
+  func: omnisealbench.attacks.audio_effects.AudioEffects.lowpass_filter
+  cutoff_freq: [500]
+highpass_filter:
+  func: omnisealbench.attacks.audio_effects.AudioEffects.highpass_filter
+  cutoff_freq: [1500]
+boost_audio:
+  func: omnisealbench.attacks.audio_effects.AudioEffects.boost_audio
+  amount: [10]
+duck_audio:
+  func: omnisealbench.attacks.audio_effects.AudioEffects.duck_audio
+  amount: [10]
+shush:
+  func: omnisealbench.attacks.audio_effects.AudioEffects.shush
+  fraction: [0.1]
+smooth:
+  func: omnisealbench.attacks.audio_effects.AudioEffects.smooth
+  window_size: [40]
+aac_compression:
+  func: omnisealbench.attacks.audio_effects.AudioEffects.aac_compression
+  bitrate: ["64k"]
+mp3_compression:
+  func: omnisealbench.attacks.audio_effects.AudioEffects.mp3_compression
+  bitrate: ["32k"]

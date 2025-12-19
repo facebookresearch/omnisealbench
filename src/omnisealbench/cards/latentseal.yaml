@@ -1,0 +1,21 @@
+# Copyright (c) Meta Platforms, Inc. and affiliates.
+# All rights reserved.
+#
+# This source code is licensed under the BSD-style license found in the
+# LICENSE file in the root directory of this source tree.
+ 
+# optional
+name: "videoseal_internal"
+__deps__:
+   - timm
+   - pycocotools
+   - einops
+   - opencv-python
+   - safetensors
+   - av
+   - decord
+   - pytorch-msssim
+
+# required
+builder_func: omnisealbench.models.latentseal.build_latent_watermark_model
+ckpt_path: ""

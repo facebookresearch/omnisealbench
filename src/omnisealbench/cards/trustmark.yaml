@@ -1,0 +1,16 @@
+# Copyright (c) Meta Platforms, Inc. and affiliates.
+# All rights reserved.
+#
+# This source code is licensed under the BSD-style license found in the
+# LICENSE file in the root directory of this source tree.
+ 
+# optional
+name: "trustmark"
+__deps__:
+  - trustmark
+
+# required
+builder_func: omnisealbench.models.trustmark.build_model
+model_type: Q
+encoding_type: BCH_SUPER
+nbits: 32  # We evaluate only the first 32 bits for TrustMark

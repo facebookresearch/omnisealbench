@@ -1,0 +1,46 @@
+proportion:
+  func: omnisealbench.attacks.image_effects.proportion
+  args:
+    prop: [0.5]
+collage:
+  func: omnisealbench.attacks.image_effects.collage
+  args: 
+    scale: [1.0]
+center_crop:
+  func: omnisealbench.attacks.image_effects.center_crop
+  args: 
+    scale: [0.05]
+jpeg:
+  func: omnisealbench.attacks.image_effects.jpeg_compress
+  args:
+    quality_factor: [90]
+sharpness:
+  func: omnisealbench.attacks.image_effects.adjust_sharpness
+  args:
+    sharpness_factor: [0.25]
+resize:
+  func: omnisealbench.attacks.image_effects.resize
+  args:
+    scale: [0.89]
+overlay_text:
+  func: omnisealbench.attacks.image_effects.overlay_text
+hflip:
+  func: omnisealbench.attacks.image_effects.hflip
+perspective:
+  func: omnisealbench.attacks.image_effects.perspective
+  args:
+    distortion_scale: [0.4]
+median_filter:
+  func: omnisealbench.attacks.image_effects.median_filter
+  args:
+    kernel_size: [3, 5]
+hue:
+  func: omnisealbench.attacks.image_effects.adjust_hue
+  args:
+    hue_factor: [0.2]
+gaussian_blur:
+  func: omnisealbench.attacks.image_effects.gaussian_blur
+  args:
+    kernel_size: [17]
+comb:
+  func: omnisealbench.attacks.image_effects.comb

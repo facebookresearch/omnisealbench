@@ -1,0 +1,103 @@
+
+name: Test Base Modules
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+on:
+  push:
+    branches: [ "main" ]
+    paths:
+      - "**"
+  pull_request:
+    branches: [ "main" ]
+    paths:
+      - "**"
+
+jobs:
+  pre_check:
+    runs-on: ubuntu-latest
+    outputs:
+      only_docs: ${{ steps.filter.outputs.only_docs }}
+    steps:
+      - uses: actions/checkout@v4
+      - id: filter
+        uses: dorny/paths-filter@v3
+        with:
+          filters: |
+            only_docs:
+              - 'src/omnisealbench/**/*.md'
+              - 'src/omnisealbench/*.md'
+              - 'docs/**/*.md'
+  test_common_modules:
+    needs: pre_check
+    if: needs.pre_check.outputs.only_docs != 'true'
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    strategy:
+      fail-fast: false
+      matrix:
+        python-version: ["3.10"]
+    steps:
+      - uses: actions/checkout@v4
+      - name: Set up Python ${{ matrix.python-version }}
+        uses: actions/setup-python@v5
+        with:
+          python-version: ${{ matrix.python-version }}
+          cache: "pip"
+      - name: Create base venv
+        run: |
+          python -m venv .venv_base
+          echo "$GITHUB_WORKSPACE/.venv_base/bin" >> $GITHUB_PATH
+      - name: Install dependencies
+        run: |
+          source .venv_base/bin/activate
+          python -m pip install --upgrade pip
+          pip install --no-cache-dir "numpy<2"
+          pip install --no-cache-dir torch==2.2.2+cpu torchvision==0.17.2+cpu torchaudio==2.2.2+cpu --extra-index-url https://download.pytorch.org/whl/cpu
+          pip install -e .
+          pip install pytest
+      - name: Run tests
+        run: |
+          source .venv_base/bin/activate
+          pytest -s -v tests/test_data.py
+          pytest -s -v tests/test_metrics.py
+          pytest -s -v tests/test_slurm.py
+          pytest -s -v tests/test_utils.py
+          pytest -s -v tests/test_attacks.py
+      - name: Cleanup base venv
+        if: always()
+        run: |
+          rm -rf .venv_base "$HOME/.cache/torch"
+  
+  test_bulk_install:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    strategy:
+      fail-fast: false
+      matrix:
+        python-version: ["3.10", "3.11"]
+    steps:
+      - uses: actions/checkout@v4
+      - name: Set up Python ${{ matrix.python-version }}
+        uses: actions/setup-python@v5
+        with:
+          python-version: ${{ matrix.python-version }}
+          cache: "pip"
+      - name: Create base venv
+        run: |
+          python -m venv .venv_base
+          echo "$GITHUB_WORKSPACE/.venv_base/bin" >> $GITHUB_PATH
+      - name: Install dependencies
+        run: |
+          source .venv_base/bin/activate
+          python -m pip install --upgrade pip
+          pip install --no-cache-dir "numpy<2"
+          pip install --no-cache-dir torch==2.2.2+cpu torchvision==0.17.2+cpu torchaudio==2.2.2+cpu --extra-index-url https://download.pytorch.org/whl/cpu
+          pip install -e '.[all]'
+          pip install pytest
+          echo "Finished full installation of all dependencies"
+      - name: Cleanup base venv
+        if: always()
+        run: |
+          rm -rf .venv_base "$HOME/.cache/torch"

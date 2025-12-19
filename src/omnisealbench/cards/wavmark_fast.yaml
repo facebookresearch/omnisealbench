@@ -1,0 +1,23 @@
+# Copyright (c) Meta Platforms, Inc. and affiliates.
+# All rights reserved.
+#
+# This source code is licensed under the BSD-style license found in the
+# LICENSE file in the root directory of this source tree.
+
+name: wavmark_fast
+__deps__:
+  - wavmark
+
+# required
+builder_func: omnisealbench.models.wavmark.build_model
+model_name_or_path: default
+
+
+# nbits: Number of bits in the watermark message.
+nbits: 16
+
+# zero shot mode only look at first 1s, is usefull to reduce the computation time
+one_shot: False
+
+# For internal handling of chunks in the model
+sample_rate: 16000

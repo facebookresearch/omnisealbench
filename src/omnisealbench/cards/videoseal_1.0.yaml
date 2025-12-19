@@ -1,0 +1,30 @@
+# Copyright (c) Meta Platforms, Inc. and affiliates.
+# All rights reserved.
+#
+# This source code is licensed under the BSD-style license found in the
+# LICENSE file in the root directory of this source tree.
+ 
+# optional
+name: "videoseal_1.0"
+__deps__:
+   - timm
+   - pycocotools
+   - einops
+   - opencv-python
+   - safetensors
+   - av
+  
+# required
+builder_func: omnisealbench.models.videoseal.build_model
+model_card_or_path: "videoseal_1.0"
+nbits: 256
+detection_bits: 16
+scaling_w: 0.2
+videoseal_chunk_size: 32
+videoseal_step_size: 4
+attenuation: "jnd_1_1"
+attenuation_config: "src/omnisealbench/models/videoseal_src/configs/attenuation.yaml"
+video_aggregation: "avg"
+videoseal_mode: "repeat"
+lowres_attenuation: False
+img_size_proc: 256

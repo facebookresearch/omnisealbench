@@ -1,0 +1,21 @@
+# Copyright (c) Meta Platforms, Inc. and affiliates.
+# All rights reserved.
+#
+# This source code is licensed under the BSD-style license found in the
+# LICENSE file in the root directory of this source tree.
+ 
+# optional
+name: "hidden"
+
+generator:
+  # required
+  builder_func: omnisealbench.models.hidden.build_generator
+  model_card_or_path: '${OMNISEAL_CHECKPOINTS}/hidden/encoder_with_jnd_48b.torchscript.pt'
+  lambda_w: 0.45
+  nbits: 48
+
+detector:
+  builder_func: omnisealbench.models.hidden.build_detector
+  model_card_or_path: '${OMNISEAL_CHECKPOINTS}/hidden/decoder_48b.torchscript.pt'
+  detection_bits: 16
+  nbits: 48

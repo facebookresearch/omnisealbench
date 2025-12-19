@@ -9,7 +9,6 @@ __pycache__/
 # Distribution / packaging
 .Python
 build/
-examples/
 develop-eggs/
 dist/
 downloads/
@@ -108,3 +107,4 @@ cython_debug/
 
 # local training outputs
 outputs/*
+logs/

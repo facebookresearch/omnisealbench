@@ -1,0 +1,14 @@
+# Copyright (c) Meta Platforms, Inc. and affiliates.
+# All rights reserved.
+#
+# This source code is licensed under the BSD-style license found in the
+# LICENSE file in the root directory of this source tree.
+ 
+# optional
+name: "mbrs"
+
+# required
+builder_func: omnisealbench.models.mbrs.build_model
+model_card_or_path: '${OMNISEAL_CHECKPOINTS}/mbrs/EC_42.pth'
+detection_bits: 16
+nbits: 256

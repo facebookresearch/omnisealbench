@@ -1,0 +1,17 @@
+# Copyright (c) Meta Platforms, Inc. and affiliates.
+# All rights reserved.
+#
+# This source code is licensed under the BSD-style license found in the
+# LICENSE file in the root directory of this source tree.
+ 
+# optional
+name: "timbre"
+
+generator:
+  builder_func: omnisealbench.models.timbre.build_generator
+  model_card_or_path: '${OMNISEAL_CHECKPOINTS}/timbre/compressed_none-conv2_ep_20_2023-02-14_02_24_57.pth.tar'
+  nbits: 30
+detector:
+  builder_func: omnisealbench.models.timbre.build_detector
+  model_card_or_path: '${OMNISEAL_CHECKPOINTS}/timbre/compressed_none-conv2_ep_20_2023-02-14_02_24_57.pth.tar'
+  nbits: 30

@@ -1,0 +1,63 @@
+image:
+  proportion: Geometric
+  collage: Inpainting
+  center_crop: Geometric
+  rotate: Geometric
+  jpeg: Compression
+  brightness: Visual
+  contrast: Visual
+  saturation: Visual
+  sharpness: Visual
+  resize: Geometric
+  crop: Geometric
+  overlay_text: Inpainting
+  hflip: Geometric
+  perspective: Geometric
+  median_filter: Visual
+  hue: Visual
+  gaussian_blur: Visual
+  Rotate: Geometric
+  Grayscale: Visual
+  JPEG_Crop_Brightness: Geometric
+  JPEG_Crop_Brightness1: Geometric
+  JPEG_Crop_Brightness2: Geometric
+  JPEG_Crop_Brightness3: Geometric
+  comb: Mixed
+
+audio:
+  speed: TimeDomain
+  speed_julius: TimeDomain
+  updownresample: TimeDomain
+  echo: TimeDomain
+  random_noise: AmplitudeDomain
+  lowpass_filter: AmplitudeDomain
+  highpass_filter: AmplitudeDomain
+  bandpass_filter: AmplitudeDomain
+  smooth: AmplitudeDomain
+  boost_audio: AmplitudeDomain
+  duck_audio: AmplitudeDomain
+  shush: AmplitudeDomain
+  pink_noise: AmplitudeDomain
+  aac_compression: Compression
+  mp3_compression: Compression
+
+video:
+  HorizontalFlip: Geometric
+  Rotate: Geometric
+  Resize: Geometric
+  Crop: Geometric
+  Contrast: Visual
+  Saturation: Visual
+  Grayscale: Visual
+  Hue: Visual
+  JPEG: Compression
+  GaussianBlur: Visual
+  MedianFilter: Visual
+  H264: Compression
+  H264rgb: Compression
+  H265: Compression
+  VP9: Compression
+  H264_Crop_Brightness0: Mixed
+  H264_Crop_Brightness1: Mixed
+  H264_Crop_Brightness2: Mixed
+  H264_Crop_Brightness3: Mixed

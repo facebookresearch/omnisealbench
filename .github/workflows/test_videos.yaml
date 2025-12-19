@@ -1,0 +1,252 @@
+
+name: Test Video Models
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+on:
+  push:
+    branches: [ "main" ]
+    paths:
+      - "**"
+  pull_request:
+    branches: [ "main" ]
+    paths:
+      - "**"
+
+jobs:
+  pre_check:
+    runs-on: ubuntu-latest
+    outputs:
+      audio_or_image: ${{ steps.filter.outputs.audio_or_image }}
+      video: ${{ steps.filter.outputs.video }}
+    steps:
+      - uses: actions/checkout@v4
+      - id: filter
+        uses: dorny/paths-filter@v3
+        with:
+          filters: |
+            audio_or_image:
+              - 'src/omnisealbench/**/*audio*'
+              - 'src/omnisealbench/**/audio/**'
+              - 'src/omnisealbench/**/audio.py'
+              - 'src/omnisealbench/**/*image*'
+              - 'src/omnisealbench/**/image/**'
+              - 'src/omnisealbench/**/image.py'
+            video:
+              - 'src/omnisealbench/**/*video*'
+              - 'src/omnisealbench/**/video/**'
+              - 'src/omnisealbench/**/videoseal/**'
+              - 'src/omnisealbench/**/video.py'
+              - 'src/omnisealbench/**/videoseal.py'
+
+
+#   test_common_video_functions:
+#     needs: pre_check
+#     runs-on: ubuntu-latest
+#     timeout-minutes: 40
+#     strategy:
+#       fail-fast: false
+#       matrix:
+#         python-version: ["3.10"]
+#     if: needs.pre_check.outputs.audio_or_image != 'true' || needs.pre_check.outputs.video == 'true'
+#     steps:
+#       - uses: actions/checkout@v4
+#       - name: Set up Python ${{ matrix.python-version }}
+#         uses: actions/setup-python@v5
+#         with:
+#           python-version: ${{ matrix.python-version }}
+#           cache: "pip"
+#       - name: Create video venv
+#         run: |
+#           python -m venv .venv_video
+#           echo "$GITHUB_WORKSPACE/.venv_video/bin" >> $GITHUB_PATH
+#       - name: Install dependencies
+#         run: |
+#           source .venv_video/bin/activate
+#           sudo apt-get update
+#           sudo apt-get install -y ffmpeg --fix-missing
+#           python -m pip install --upgrade pip
+#           pip install --no-cache-dir "numpy<2"
+#           pip install --no-cache-dir pip install torch==2.2.2+cpu torchvision==0.17.2+cpu torchaudio==2.2.2+cpu --extra-index-url https://download.pytorch.org/whl/cpu
+#           pip install -e '.[video]'
+#           pip install pytest
+#       - name: Run tests
+#         run: |
+#           pytest -s -v tests/video/test_dataset.py
+#           pytest -s -v tests/video/test_save_video.py
+  
+  test_model:
+    needs: pre_check
+    runs-on: ubuntu-latest
+    timeout-minutes: 40
+    strategy:
+      fail-fast: false
+      matrix:
+        python-version: ["3.10"]
+        model_name: [ rivagan, videoseal ]
+    if: needs.pre_check.outputs.audio_or_image != 'true' || needs.pre_check.outputs.video == 'true'
+    steps:
+      - uses: actions/checkout@v4
+      - name: Run tests for ${{ matrix.model_name }}
+        uses: actions/setup-python@v5
+        with:
+          python-version: ${{ matrix.python-version }}
+          cache: "pip"
+      - name: Create video venv
+        run: |
+          python -m venv .venv_video
+          echo "$GITHUB_WORKSPACE/.venv_video/bin" >> $GITHUB_PATH
+      - name: Install dependencies
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y ffmpeg --fix-missing
+          python -m pip install --upgrade pip
+          pip install --no-cache-dir "numpy<2"
+          pip install --no-cache-dir torch==2.2.2+cpu torchvision==0.17.2+cpu torchaudio==2.2.2+cpu --extra-index-url https://download.pytorch.org/whl/cpu
+          pip install -e '.[video]'
+      - name: Install rivagan
+        if: matrix.model_name == 'rivagan'
+        run: |
+          source .venv_video/bin/activate
+          pip install torch-dct
+      - name: Install videoseal
+        if: matrix.model_name == 'videoseal'
+        run: |
+          source .venv_video/bin/activate
+          pip install pycocotools timm einops opencv-python safetensors av decord
+          git clone https://github.com/facebookresearch/videoseal.git
+          export PYTHONPATH="$PYTHONPATH:$(pwd)/videoseal"
+      - name: Download video models
+        run: |
+          source .venv_video/bin/activate
+          mkdir -p checkpoints
+          export OMNISEAL_CHECKPOINTS=checkpoints
+          export OMNISEAL_MODEL=${{ matrix.model_name }}
+          pip install gdown
+          bash scripts/download_video_models.sh
+      - name: Run model tests for ${{ matrix.model_name }}
+        run: |
+          source .venv_video/bin/activate
+          mkdir -p checkpoints
+          pip install pytest
+          PYTHONPATH=$(pwd)/videoseal OMNISEAL_CHECKPOINTS=checkpoints pytest -s -v tests/video/test_models.py::test_load_${{ matrix.model_name }}
+      - name: Test `omniseal info model`
+        run: |
+          source .venv_video/bin/activate
+          mkdir -p checkpoints
+          echo "Testing 'omniseal info model' with all video models but invismark (due to unavaiable model checkpoint):"
+          output=$(bash -c 'OMNISEAL_CHECKPOINTS=checkpoints omniseal info model ${{ matrix.model_name }}')
+          if echo "$output" | grep -q "Error:"; then
+            echo "::error::Command failed with output: $output"
+            exit 1
+          fi
+          echo "Command succeeded with output: $output"
+      - name: Cleanup checkpoints and clone
+        if: always()
+        run: |
+          rm -rf checkpoints videoseal .venv_video "$HOME/.cache/torch"
+
+  # test_e2e:
+  #   needs: pre_check
+  #   runs-on: ubuntu-latest
+  #   timeout-minutes: 40
+  #   strategy:
+  #     fail-fast: false
+  #     matrix:
+  #       python-version: ["3.10"]
+  #   if: needs.pre_check.outputs.audio_or_image != 'true' || needs.pre_check.outputs.video == 'true'
+  #   steps:
+  #     - uses: actions/checkout@v4
+  #     - name: Run tests for ${{ matrix.model_name }}
+  #       uses: actions/setup-python@v5
+  #       with:
+  #         python-version: ${{ matrix.python-version }}
+  #         cache: "pip"
+  #     - name: Create video venv
+  #       run: |
+  #         python -m venv .venv_video
+  #         echo "$GITHUB_WORKSPACE/.venv_video/bin" >> $GITHUB_PATH
+  #     - name: Download video models
+  #       run: |
+  #         source .venv_video/bin/activate
+  #         mkdir -p checkpoints
+  #         export OMNISEAL_CHECKPOINTS=checkpoints
+  #         export OMNISEAL_MODEL=${{ matrix.model_name }}
+  #         pip install gdown
+  #         bash scripts/download_video_models.sh
+  #     - name: Install dependencies
+  #       run: |
+  #         source .venv_video/bin/activate
+  #         sudo apt-get update
+  #         sudo apt-get install -y ffmpeg --fix-missing
+  #         python -m pip install --upgrade pip
+  #         pip install --no-cache-dir "numpy<2"
+  #         pip install --no-cache-dir 'av>=12' torch==2.3.1+cpu torchvision==0.18.1+cpu torchaudio==2.3.1+cpu --extra-index-url https://download.pytorch.org/whl/cpu
+  #         pip install -e '.[video]'
+  #         git clone https://github.com/facebookresearch/videoseal.git
+  #         export PYTHONPATH="$PYTHONPATH:$(pwd)/videoseal"
+  #     - name: Run example end-to-end API tests
+  #       run: |
+  #         source .venv_video/bin/activate
+  #         pip install pytest
+  #         PYTHONPATH="$PYTHONPATH:$(pwd)/videoseal" OMNISEAL_CHECKPOINTS=checkpoints pytest -s -v "tests/video/test_api.py"
+  #     - name: Cleanup checkpoints and clone
+  #       if: always()
+  #       run: |
+  #         rm -rf checkpoints videoseal .venv_video "$HOME/.cache/torch"
+
+
+
+
+
+
+  # Disable since this test takes too long
+  # test_cli:
+  #   needs: pre_check
+  #   runs-on: ubuntu-latest
+  #   timeout-minutes: 20
+  #   strategy:
+  #     fail-fast: false
+  #     matrix:
+  #       python-version: ["3.10"]
+  #   if: needs.pre_check.outputs.audio_or_image != 'true' || needs.pre_check.outputs.video == 'true'
+  #   steps:
+  #     - uses: actions/checkout@v4
+  #     - name: Set up Python ${{ matrix.python-version }}
+  #       uses: actions/setup-python@v5
+  #       with:
+  #         python-version: ${{ matrix.python-version }}
+  #         cache: "pip"
+  # - name: maybe run CLI
+  #   id: decide
+  #   run: |
+  #     import random
+  #     if random.random() < 0.5:
+  #         print("::set-output name=run_job::true")
+  #     else:
+  #         print("::set-output name=run_job::false")
+  #   shell: python
+  # - name: decide to run CLI or not
+  #   if: steps.decide.outputs.run_job == 'false'
+  #   run:
+  #       exit 0
+  #     - name: Install dependencies
+  #       run: |
+  #         sudo apt-get install -y ffmpeg
+  #         python -m pip install --upgrade pip
+  #         pip install -e '.[video]'
+  #     - name: Install Videoseal
+  #       run: |
+  #         git clone https://github.com/facebookresearch/videoseal.git
+  #         export PYTHONPATH="$PYTHONPATH:$(pwd)/videoseal"
+  #     - name: Run CLI tests for video
+  #       run: |
+  #         echo "Testing 'omniseal eval video' with all video models but invismark (due to unavaiable model checkpoint):"
+  #         output=$(bash -c 'PYTHONPATH="$PYTHONPATH:$(pwd)/videoseal" OMNISEAL_CHECKPOINTS=checkpoints omniseal eval video --dataset_dir=examples/videos --result_dir=results/videos --model=videoseal_1.0 --attacks=Grayscale')
+  #         if echo "$output" | grep -q "Error:"; then
+  #           echo "::error::Command failed with output: $output"
+  #           exit 1
+  #         fi
+  #         echo "Command succeeded with output: $output"
+ 

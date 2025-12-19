@@ -1,0 +1,539 @@
+{
+  "date": "2025-08-13 15:57",
+  "eval": {
+    "data": {
+      "wam": {
+        "adjust_brightness": {
+          "brightness_factor_2.0": [
+            {
+              "TPR": 0.9628726840019226,
+              "det": true,
+              "FPR": 0.0832899883389473,
+              "det_negative": false,
+              "bit_acc": 1.0,
+              "word_acc": true,
+              "p_value": 2.3283064365386963e-10,
+              "log10_p_value": -9.632959861247398,
+              "ssim": 0.9932591319084167,
+              "lpips": 0.014390543103218,
+              "psnr": 39.07314300537109,
+              "_id": 0,
+              "attack_name": "adjust_brightness",
+              "attack_variant": "brightness_factor_2.0",
+              "attack_category": "no-category"
+            }
+          ]
+        },
+        "adjust_contrast": {
+          "contrast_factor_1.0": [
+            {
+              "TPR": 0.9990640878677368,
+              "det": true,
+              "FPR": 0.0032219709828495,
+              "det_negative": false,
+              "bit_acc": 1.0,
+              "word_acc": true,
+              "p_value": 2.3283064365386963e-10,
+              "log10_p_value": -9.632959861247398,
+              "ssim": 0.9933443069458008,
+              "lpips": 0.0176286492496728,
+              "psnr": 41.20025253295898,
+              "_id": 0,
+              "attack_name": "adjust_contrast",
+              "attack_variant": "contrast_factor_1.0",
+              "attack_category": "no-category"
+            }
+          ]
+        },
+        "adjust_hue": {
+          "hue_factor_0.2": [
+            {
+              "TPR": 0.8947482109069824,
+              "det": true,
+              "FPR": 0.0147368162870407,
+              "det_negative": false,
+              "bit_acc": 1.0,
+              "word_acc": true,
+              "p_value": 2.3283064365386963e-10,
+              "log10_p_value": -9.632959861247398,
+              "ssim": 0.9868581891059875,
+              "lpips": 0.0624267011880874,
+              "psnr": 37.68574523925781,
+              "_id": 0,
+              "attack_name": "adjust_hue",
+              "attack_variant": "hue_factor_0.2",
+              "attack_category": "no-category"
+            }
+          ]
+        },
+        "adjust_saturation": {
+          "saturation_factor_1.75": [
+            {
+              "TPR": 0.999784529209137,
+              "det": true,
+              "FPR": 0.0050390684045851,
+              "det_negative": false,
+              "bit_acc": 1.0,
+              "word_acc": true,
+              "p_value": 2.3283064365386963e-10,
+              "log10_p_value": -9.632959861247398,
+              "ssim": 0.9816352725028992,
+              "lpips": 0.0326364003121852,
+              "psnr": 36.78790283203125,
+              "_id": 0,
+              "attack_name": "adjust_saturation",
+              "attack_variant": "saturation_factor_1.75",
+              "attack_category": "no-category"
+            }
+          ]
+        },
+        "adjust_sharpness": {
+          "sharpness_factor_0.25": [
+            {
+              "TPR": 0.999035120010376,
+              "det": true,
+              "FPR": 0.003204139880836,
+              "det_negative": false,
+              "bit_acc": 1.0,
+              "word_acc": true,
+              "p_value": 2.3283064365386963e-10,
+              "log10_p_value": -9.632959861247398,
+              "ssim": 0.9942121505737304,
+              "lpips": 0.0158652327954769,
+              "psnr": 41.64244842529297,
+              "_id": 0,
+              "attack_name": "adjust_sharpness",
+              "attack_variant": "sharpness_factor_0.25",
+              "attack_category": "no-category"
+            }
+          ]
+        },
+        "center_crop": {
+          "scale_0.05": [
+            {
+              "TPR": 0.7517808675765991,
+              "det": true,
+              "FPR": 0.0164365172386169,
+              "det_negative": false,
+              "bit_acc": 0.5625,
+              "word_acc": false,
+              "p_value": 0.2983074479270726,
+              "log10_p_value": -0.5253359033484656,
+              "ssim": NaN,
+              "lpips": NaN,
+              "psnr": NaN,
+              "_id": 0,
+              "attack_name": "center_crop",
+              "attack_variant": "scale_0.05",
+              "attack_category": "Geometric"
+            }
+          ],
+          "scale_0.1": [
+            {
+              "TPR": 0.9799969792366028,
+              "det": true,
+              "FPR": 0.0229569617658853,
+              "det_negative": false,
+              "bit_acc": 0.9375,
+              "word_acc": false,
+              "p_value": 1.2316741049289706e-07,
+              "log10_p_value": -6.909504189212212,
+              "ssim": NaN,
+              "lpips": NaN,
+              "psnr": NaN,
+              "_id": 0,
+              "attack_name": "center_crop",
+              "attack_variant": "scale_0.1",
+              "attack_category": "Geometric"
+            }
+          ],
+          "scale_0.2": [
+            {
+              "TPR": 0.9921737909317015,
+              "det": true,
+              "FPR": 0.0076139015145599,
+              "det_negative": false,
+              "bit_acc": 1.0,
+              "word_acc": true,
+              "p_value": 2.3283064365386963e-10,
+              "log10_p_value": -9.632959861247398,
+              "ssim": NaN,
+              "lpips": NaN,
+              "psnr": NaN,
+              "_id": 0,
+              "attack_name": "center_crop",
+              "attack_variant": "scale_0.2",
+              "attack_category": "Geometric"
+            }
+          ],
+          "scale_0.5": [
+            {
+              "TPR": 0.9995254278182985,
+              "det": true,
+              "FPR": 0.0009394389926455,
+              "det_negative": false,
+              "bit_acc": 1.0,
+              "word_acc": true,
+              "p_value": 2.3283064365386963e-10,
+              "log10_p_value": -9.632959861247398,
+              "ssim": NaN,
+              "lpips": NaN,
+              "psnr": NaN,
+              "_id": 0,
+              "attack_name": "center_crop",
+              "attack_variant": "scale_0.5",
+              "attack_category": "Geometric"
+            }
+          ],
+          "scale_1.0": [
+            {
+              "TPR": 0.9990640878677368,
+              "det": true,
+              "FPR": 0.0032219709828495,
+              "det_negative": false,
+              "bit_acc": 1.0,
+              "word_acc": true,
+              "p_value": 2.3283064365386963e-10,
+              "log10_p_value": -9.632959861247398,
+              "ssim": NaN,
+              "lpips": NaN,
+              "psnr": NaN,
+              "_id": 0,
+              "attack_name": "center_crop",
+              "attack_variant": "scale_1.0",
+              "attack_category": "Geometric"
+            }
+          ]
+        },
+        "collage": {
+          "scale_1.0": [
+            {
+              "TPR": 0.958096981048584,
+              "det": true,
+              "FPR": 0.0030366808641701,
+              "det_negative": false,
+              "bit_acc": 1.0,
+              "word_acc": true,
+              "p_value": 2.3283064365386963e-10,
+              "log10_p_value": -9.632959861247398,
+              "ssim": 0.9273691773414612,
+              "lpips": 0.1128780171275138,
+              "psnr": 6.436290740966797,
+              "_id": 0,
+              "attack_name": "collage",
+              "attack_variant": "scale_1.0",
+              "attack_category": "Inpainting"
+            }
+          ]
+        },
+        "comb": {
+          "default": [
+            {
+              "TPR": 0.4988625943660736,
+              "det": false,
+              "FPR": 0.0094595942646265,
+              "det_negative": false,
+              "bit_acc": 0.9375,
+              "word_acc": false,
+              "p_value": 1.2316741049289706e-07,
+              "log10_p_value": -6.909504189212212,
+              "ssim": NaN,
+              "lpips": NaN,
+              "psnr": NaN,
+              "_id": 0,
+              "attack_name": "comb",
+              "attack_variant": "default",
+              "attack_category": "Mixed"
+            }
+          ]
+        },
+        "gaussian_blur": {
+          "kernel_size_17": [
+            {
+              "TPR": 0.9992658495903016,
+              "det": true,
+              "FPR": 0.0049491231329739,
+              "det_negative": false,
+              "bit_acc": 1.0,
+              "word_acc": true,
+              "p_value": 2.3283064365386963e-10,
+              "log10_p_value": -9.632959861247398,
+              "ssim": 0.9984412789344788,
+              "lpips": 0.0061765974387526,
+              "psnr": 46.03195571899414,
+              "_id": 0,
+              "attack_name": "gaussian_blur",
+              "attack_variant": "kernel_size_17",
+              "attack_category": "Visual"
+            }
+          ]
+        },
+        "hflip": {
+          "default": [
+            {
+              "TPR": 0.9985524415969848,
+              "det": true,
+              "FPR": 0.0018104960909113,
+              "det_negative": false,
+              "bit_acc": 1.0,
+              "word_acc": true,
+              "p_value": 2.3283064365386963e-10,
+              "log10_p_value": -9.632959861247398,
+              "ssim": NaN,
+              "lpips": NaN,
+              "psnr": NaN,
+              "_id": 0,
+              "attack_name": "hflip",
+              "attack_variant": "default",
+              "attack_category": "Geometric"
+            }
+          ]
+        },
+        "jpeg_compress": {
+          "quality_factor_90": [
+            {
+              "TPR": 0.9970329999923706,
+              "det": true,
+              "FPR": 0.0023210854269564,
+              "det_negative": false,
+              "bit_acc": 1.0,
+              "word_acc": true,
+              "p_value": 2.3283064365386963e-10,
+              "log10_p_value": -9.632959861247398,
+              "ssim": 0.9897454380989076,
+              "lpips": 0.0281837936490774,
+              "psnr": 40.21232223510742,
+              "_id": 0,
+              "attack_name": "jpeg_compress",
+              "attack_variant": "quality_factor_90",
+              "attack_category": "no-category"
+            }
+          ]
+        },
+        "median_filter": {
+          "kernel_size_13": [
+            {
+              "TPR": 0.9923323392868042,
+              "det": true,
+              "FPR": 0.0036112717352807,
+              "det_negative": false,
+              "bit_acc": 1.0,
+              "word_acc": true,
+              "p_value": 2.3283064365386963e-10,
+              "log10_p_value": -9.632959861247398,
+              "ssim": NaN,
+              "lpips": NaN,
+              "psnr": NaN,
+              "_id": 0,
+              "attack_name": "median_filter",
+              "attack_variant": "kernel_size_13",
+              "attack_category": "Visual"
+            }
+          ],
+          "kernel_size_17": [
+            {
+              "TPR": 0.968372106552124,
+              "det": true,
+              "FPR": 0.0026748995296657,
+              "det_negative": false,
+              "bit_acc": 0.90625,
+              "word_acc": false,
+              "p_value": 1.2780074030160904e-06,
+              "log10_p_value": -5.893466630465784,
+              "ssim": NaN,
+              "lpips": NaN,
+              "psnr": NaN,
+              "_id": 0,
+              "attack_name": "median_filter",
+              "attack_variant": "kernel_size_17",
+              "attack_category": "Visual"
+            }
+          ],
+          "kernel_size_3": [
+            {
+              "TPR": 0.9960366487503052,
+              "det": true,
+              "FPR": 0.0031822845339775,
+              "det_negative": false,
+              "bit_acc": 1.0,
+              "word_acc": true,
+              "p_value": 2.3283064365386963e-10,
+              "log10_p_value": -9.632959861247398,
+              "ssim": NaN,
+              "lpips": NaN,
+              "psnr": NaN,
+              "_id": 0,
+              "attack_name": "median_filter",
+              "attack_variant": "kernel_size_3",
+              "attack_category": "Visual"
+            }
+          ],
+          "kernel_size_5": [
+            {
+              "TPR": 0.9956209659576416,
+              "det": true,
+              "FPR": 0.0036828510928899,
+              "det_negative": false,
+              "bit_acc": 1.0,
+              "word_acc": true,
+              "p_value": 2.3283064365386963e-10,
+              "log10_p_value": -9.632959861247398,
+              "ssim": NaN,
+              "lpips": NaN,
+              "psnr": NaN,
+              "_id": 0,
+              "attack_name": "median_filter",
+              "attack_variant": "kernel_size_5",
+              "attack_category": "Visual"
+            }
+          ],
+          "kernel_size_9": [
+            {
+              "TPR": 0.992432713508606,
+              "det": true,
+              "FPR": 0.0041953292675316,
+              "det_negative": false,
+              "bit_acc": 1.0,
+              "word_acc": true,
+              "p_value": 2.3283064365386963e-10,
+              "log10_p_value": -9.632959861247398,
+              "ssim": NaN,
+              "lpips": NaN,
+              "psnr": NaN,
+              "_id": 0,
+              "attack_name": "median_filter",
+              "attack_variant": "kernel_size_9",
+              "attack_category": "Visual"
+            }
+          ]
+        },
+        "no-attack": {
+          "default": [
+            {
+              "TPR": 0.9990640878677368,
+              "det": true,
+              "FPR": 0.0032219709828495,
+              "det_negative": false,
+              "bit_acc": 1.0,
+              "word_acc": true,
+              "p_value": 2.3283064365386963e-10,
+              "log10_p_value": -9.632959861247398,
+              "ssim": 0.9933443069458008,
+              "lpips": 0.0176286492496728,
+              "psnr": 41.20025253295898,
+              "_id": 0,
+              "attack_name": "no-attack",
+              "attack_variant": "default",
+              "attack_category": "default"
+            }
+          ]
+        },
+        "overlay_text": {
+          "default": [
+            {
+              "TPR": 0.9978713989257812,
+              "det": true,
+              "FPR": 0.0043173385784029,
+              "det_negative": false,
+              "bit_acc": 1.0,
+              "word_acc": true,
+              "p_value": 2.3283064365386963e-10,
+              "log10_p_value": -9.632959861247398,
+              "ssim": 0.99348783493042,
+              "lpips": 0.0165065545588731,
+              "psnr": 41.232200622558594,
+              "_id": 0,
+              "attack_name": "overlay_text",
+              "attack_variant": "default",
+              "attack_category": "Inpainting"
+            }
+          ]
+        },
+        "perspective": {
+          "distortion_scale_0.4": [
+            {
+              "TPR": 0.504671037197113,
+              "det": true,
+              "FPR": 0.0016239153919741,
+              "det_negative": false,
+              "bit_acc": 1.0,
+              "word_acc": true,
+              "p_value": 2.3283064365386963e-10,
+              "log10_p_value": -9.632959861247398,
+              "ssim": NaN,
+              "lpips": NaN,
+              "psnr": NaN,
+              "_id": 0,
+              "attack_name": "perspective",
+              "attack_variant": "distortion_scale_0.4",
+              "attack_category": "Geometric"
+            }
+          ]
+        },
+        "proportion": {
+          "prop_0.5": [
+            {
+              "TPR": 0.5027562379837036,
+              "det": true,
+              "FPR": 0.0032219709828495,
+              "det_negative": false,
+              "bit_acc": 1.0,
+              "word_acc": true,
+              "p_value": 2.3283064365386963e-10,
+              "log10_p_value": -9.632959861247398,
+              "ssim": NaN,
+              "lpips": NaN,
+              "psnr": NaN,
+              "_id": 0,
+              "attack_name": "proportion",
+              "attack_variant": "prop_0.5",
+              "attack_category": "Geometric"
+            }
+          ]
+        },
+        "resize": {
+          "scale_0.89": [
+            {
+              "TPR": 0.9989975690841676,
+              "det": true,
+              "FPR": 0.0032282704487442,
+              "det_negative": false,
+              "bit_acc": 1.0,
+              "word_acc": true,
+              "p_value": 2.3283064365386963e-10,
+              "log10_p_value": -9.632959861247398,
+              "ssim": NaN,
+              "lpips": NaN,
+              "psnr": NaN,
+              "_id": 0,
+              "attack_name": "resize",
+              "attack_variant": "scale_0.89",
+              "attack_category": "Geometric"
+            }
+          ]
+        },
+        "rotate": {
+          "angle_90": [
+            {
+              "TPR": 0.9670243263244628,
+              "det": true,
+              "FPR": 0.0009883245220407,
+              "det_negative": false,
+              "bit_acc": 0.46875,
+              "word_acc": false,
+              "p_value": 0.7016925520729274,
+              "log10_p_value": -0.1538531331488182,
+              "ssim": NaN,
+              "lpips": NaN,
+              "psnr": NaN,
+              "_id": 0,
+              "attack_name": "rotate",
+              "attack_variant": "angle_90",
+              "attack_category": "Geometric"
+            }
+          ]
+        }
+      }
+    }
+  }
+}

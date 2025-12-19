@@ -1,0 +1,119 @@
+# Dataset options
+dataset:
+  dataset_dir: ''
+
+
+data_loading:
+  batch_size: 1
+  max_frames: 72
+
+  # Codec for output video. Permissible values:
+  # rawvideo, ffv1, libx264 (with CRF=0), etc - should specify a lossless codec
+  video_codec: "pt"
+
+  fps: 24
+  crf: 0
+
+  # Maximum number of samples to load from the dataset for each run. Use for test or debugging purposes.
+  # Comment out to run on full dataset
+  num_samples: null
+
+
+eval:
+  quality_metrics:
+    - psnr
+    - ssim
+    - msssim
+    - lpips
+    - vmaf
+  
+  metrics_device: cpu
+  
+  quality_metrics_chunk_size: 1
+
+  # Seed to ensure reproducibility of results.
+  seed: 42
+
+  # Directory to save the evaluation results. For each model, a subdirectory will be created, so the 
+  # results will be saved in `result_dir/model_card_name/`.
+  result_dir: ''
+
+  # whether to overwrite existing results
+  overwrite: False
+
+  # device to load the model and run the evaluation on. Options: "cpu", "cuda", "mps". In multi-GPU setups,
+  # setting to "cuda" will use the actual GPU device set by "LOCAL_RANK" or "SLURM_LOCALID" environment variables.
+  device: null
+
+  # When performing attacks, we want to inspect some results. The `ids_to_save` option allows you to specify
+  # which sample IDs to analyze. If set to None,no sample is analyzed.
+  ids_to_save: null
+
+  # whether to show the progress bar during evaluation.
+  # NOTE: Currently not implemented. We leave it here for future use.
+  show_progress: True
+
+  # Number of process to parallelize some of the meric computation. 0 means no parallelization.
+  num_workers: 2
+
+
+# Options for watermark generation task
+watermarking:
+  # Size of the secret message to be embedded in the audio file. Most of the time, this should set to None, which means
+  # that the message size is determined by the model.
+  # In some occasions, when a model supports multiple message sizes, you can set it to a specific value.
+  message_size: null
+
+  # How to generate the random secret message. Options: "per_batch", "per_dataset"
+  how_to_generate_message: per_dataset
+
+
+# Options for detection task
+detection:
+  # threshold to change the float detection bits to binary detection results for detection score
+  # If set None, the threshold is determined by the model (if the model has this attribute).
+  # Other common values to try: 0.95
+  detection_threshold: null
+
+  # threshold to change the float message bits to binary message bits for bit accuracy
+  # If set None, the threshold is determined by the model (if the model has this attribute).
+  # Other common values to try: 0.5
+  message_threshold: null
+
+  # Number of bits in the extracted message to reserve for detection scores. If 
+  # set to None, the number of bits is determined by the model.
+  detection_bits: 16
+
+  attacks:
+    - HorizontalFlip
+    - Rotate
+    - Resize
+    - Crop
+    - Perspective
+    - Brightness
+    - Contrast
+    - Saturation
+    - Grayscale
+    - Hue
+    - JPEG
+    - GaussianBlur
+    - MedianFilter
+    - H264
+    - H264rgb
+    # - H265 (causing issues with DDP)
+    - VP9
+    - H264_Crop_Brightness0
+    - H264_Crop_Brightness1
+    - H264_Crop_Brightness2
+    - H264_Crop_Brightness3
+
+
+models:
+  - videoseal_0.0
+  # - videoseal_1.0
+  # - rivagan
+
+
+# Options for SLURM execution. Simply set this to False to disable the SLURM execution and run the evaluation locally.
+# If set to True, the configs in `submitit_config.yaml` will be used.
+slurm: False

@@ -1,0 +1,62 @@
+
+name: Test Dependencies
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+on:
+  push:
+    branches: [ "main" ]
+    paths:
+      - "**"
+  pull_request:
+    branches: [ "main" ]
+    paths:
+      - "**"
+
+jobs:
+  pre_check:
+    runs-on: ubuntu-latest
+    outputs:
+      pyproject: ${{ steps.filter.outputs.pyproject }}
+      audio: ${{ steps.filter.outputs.audio }}
+    steps:
+      - uses: actions/checkout@v4
+      - id: filter
+        uses: dorny/paths-filter@v3
+        with:
+          filters: |
+            pyproject:
+              - 'pyproject.toml'
+
+  test_common_functions:
+    needs: pre_check
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    strategy:
+      fail-fast: false
+      matrix:
+        python-version: ["3.10", "3.11"]
+    if: needs.pre_check.outputs.pyproject == 'true'
+    steps:
+      - uses: actions/checkout@v4
+      - name: Set up Python ${{ matrix.python-version }}
+        uses: actions/setup-python@v5
+        with:
+          python-version: ${{ matrix.python-version }}
+          cache: "pip"
+      - name: Create all-modalities venv
+        run: |
+          python -m venv .venv_all
+          echo "$GITHUB_WORKSPACE/.venv_all/bin" >> $GITHUB_PATH
+      - name: Install dependencies
+        run: |
+          source .venv_all/bin/activate
+          python -m pip install --upgrade pip
+          pip install --no-cache-dir "numpy<2"
+          pip install --no-cache-dir av==10.0.0 torch==2.2.2+cpu torchvision==0.17.2+cpu torchaudio==2.2.2+cpu --extra-index-url https://download.pytorch.org/whl/cpu
+          pip install -e '.[all]'
+      - name: Cleanup venv
+        if: always()
+        run: |
+          rm -rf .venv_all "$HOME/.cache/torch"

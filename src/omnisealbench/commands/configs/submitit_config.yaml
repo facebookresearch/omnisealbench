@@ -1,0 +1,19 @@
+# submitit executor log folder
+log_dir: "logs"
+
+gpus_per_node: 1
+cpus_per_task: 8
+# mem_gb: 16
+timeout_min: 180
+# slurm_partition: "dev"
+max_jobarray_jobs: 8
+
+# partition: ""
+# qos: null
+# account: null
+# log_dir: "submitit_logs"
+# nodes: 1
+# mem_gb: null
+# tasks_per_node: 1
+# constraint: null
+# job_name: "omniseal_eval"

@@ -1,0 +1,31 @@
+# Copyright (c) Meta Platforms, Inc. and affiliates.
+# All rights reserved.
+#
+# This source code is licensed under the BSD-style license found in the
+# LICENSE file in the root directory of this source tree.
+
+# optional
+name: "videoseal_3.0"
+__deps__:
+   - timm
+   - pycocotools
+   - einops
+   - opencv-python
+   - safetensors
+   - av
+
+# required
+builder_func: omnisealbench.models.videoseal_internal.build_model
+# model_card_or_path: "/checkpoint/soucek/2025_logs/0926_vseal_aws-dynsize768-aug_size_sweep-discfrom100/_embedder_model=1_augmentation_config=1/checkpoint.pth"
+model_card_or_path: /large_experiments/omniseal/tuantran/benchmark/omniseal/checkpoints/pixelseal/checkpoint.pth
+nbits: 256
+detection_bits: 16
+scaling_w: 0.2
+videoseal_chunk_size: 32
+videoseal_step_size: 4
+attenuation: "jnd_1_1"
+attenuation_config: "src/omnisealbench/models/videoseal_src/configs/attenuation.yaml"
+video_aggregation: "avg"
+videoseal_mode: "repeat"
+lowres_attenuation: False
+img_size_proc: 256

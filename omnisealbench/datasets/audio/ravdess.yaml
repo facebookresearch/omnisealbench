@@ -1,2 +1,0 @@
-name: ravdess
-builder_func: omnisealbench.data.audio.ravdess.get_ravdess_dataset

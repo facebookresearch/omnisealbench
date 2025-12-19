@@ -1,0 +1,87 @@
+
+name: Test Leaderboard CLI
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+on:
+  push:
+    branches: [ "main" ]
+    paths:
+      - "**"
+  pull_request:
+    branches: [ "main" ]
+    paths:
+      - "**"
+
+jobs:
+  pre_check:
+    runs-on: ubuntu-latest
+    outputs:
+      commands: ${{ steps.filter.outputs.commands }}
+    steps:
+      - uses: actions/checkout@v4
+      - id: filter
+        uses: dorny/paths-filter@v3
+        with:
+          filters: |
+            commands:
+              - 'src/omnisealbench/**/*leaderboard*'
+              - 'src/omnisealbench/commands/*.py'
+
+  test_leaderboard:
+    needs: pre_check
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    strategy:
+      fail-fast: false
+      matrix:
+        python-version: ["3.10"]
+    if: needs.pre_check.outputs.commands == 'true'
+    steps:
+      - uses: actions/checkout@v4
+      - name: Set up Python ${{ matrix.python-version }}
+        uses: actions/setup-python@v5
+        with:
+          python-version: ${{ matrix.python-version }}
+          cache: "pip"
+      - name: Create leaderboard venv
+        run: |
+          python -m venv .venv_leaderboard
+          echo "$GITHUB_WORKSPACE/.venv_leaderboard/bin" >> $GITHUB_PATH
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install --no-cache-dir "numpy<2"
+          pip install -e '.[image,leaderboard]'
+          pip install trustmark invisible-watermark
+          pip install pytest
+      - name: Download image models
+        run: |
+          mkdir -p checkpoints
+          export OMNISEAL_CHECKPOINTS=checkpoints
+          pip install gdown
+          OMNISEAL_MODEL=dct_dwt bash scripts/download_image_models.sh
+          OMNISEAL_MODEL=trustmark bash scripts/download_image_models.sh
+      - name: Run CLI tests for image
+        run: |
+          echo "Testing 'omniseal eval image' with all image models but invismark (due to unavaiable model checkpoint):"
+          output=$(bash -c 'OMNISEAL_CHECKPOINTS=checkpoints omniseal eval image --dataset_dir=examples/img --result_dir=results/image --ids_to_save=all --model=dct_dwt,trustmark --attacks=tests/image/image_attacks_mini.yaml')
+          if echo "$output" | grep -q "Error:"; then
+            echo "::error::Command failed with output: $output"
+            exit 1
+          fi
+          echo "Command succeeded with output: $output"
+      - name: Run CLI tests for image
+        run: |
+          echo "Testing 'leaderboard export' with all image models:"
+          output=$(bash -c 'OMNISEAL_CHECKPOINTS=checkpoints omniseal leaderboard export --modality image --source=results/image --samples=all')
+          if echo "$output" | grep -q "Error:"; then
+            echo "::error::Command failed with output: $output"
+            exit 1
+          fi
+          echo "Command succeeded with output: $output"
+      - name: Cleanup checkpoints, results, venv
+        if: always()
+        run: |
+          rm -rf checkpoints results/image results_image .venv_leaderboard "$HOME/.cache/torch"
