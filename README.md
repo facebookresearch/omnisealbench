@@ -330,5 +330,10 @@ Besides command line interface, Omniseal Bench is also equipped with a rich set 
 example usage.
 
 
-## 🙏 Acknowledgement
- tbd
+# 📃 License
+
+The model is licensed under an [MIT license](LICENSE).
+
+# Contributing
+
+See [contributing](.github/CONTRIBUTING.md) and the [code of conduct](.github/CODE_OF_CONDUCT.md).
