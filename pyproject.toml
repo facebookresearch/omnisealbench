@@ -64,7 +64,7 @@ audio = [
     "matplotlib",
 ]
 image = [
-    "numpy<2",
+    "numpy",
     "torchvision",
     "scikit-learn",
     "scikit-image",
