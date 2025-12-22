@@ -1,4 +1,7 @@
-# OmniSeal Bench  📚
+<div align="center">
+
+# OmniSeal Bench - Benchmarking Tool for multimodal watermarking models  📚
+</div>
 
 [ [HuggingFace space](https://huggingface.co/spaces/facebook/omnisealbench) ]
 [ [Meta Seal](https://facebookresearch.github.io/meta-seal/) ]
@@ -7,9 +10,31 @@ OmniSeal Bench is a framework that provides a comprehensive benchmark for evalua
 
 <img src="docs/seal.png"/>
 
-## Documentation
+## 🚀 Usage
 
-For detailed information about the models and metrics used in **OmniSeal Bench**, please refer to the [documentation](docs/README.md). This section contains markdown files that describe each model (and how to download it) and metric in detail.
+
+```python
+# Running an Omniseal Bench involves creating a task for watermarking generation or detection on a given modality,
+# then load a model. All attacks, metrics computation are provided and can be customized
+
+from omnisealbench import task, get_model
+
+img_watermarking = task(
+    "default",   # Default is end-to-end benchmarking. Other options: "generation", "detection"
+    modality="image",
+    dataset_dir="my_dataset",
+    attacks="all",
+)
+
+model = get_model("trustmark", device="cuda")
+avg_metrics, results = img_watermarking(model)
+
+summary = img_watermarking.print_scores(results)
+```
+
+### Documentation
+
+For more examples, see [notebooks/](./notebooks/). For detailed information about the models and metrics used in **OmniSeal Bench**, please refer to the [documentation](docs/README.md). This section contains markdown files that describe each model (and how to download it) and metric in detail.
 
 
 ## 📜 Installation
