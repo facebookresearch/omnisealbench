@@ -241,6 +241,7 @@ Full details: [Audio](docs/models/audio.md) , [Image](docs/models/image.md) , [V
 | Image    | CIN                  | `model_card_or_path`, `nbits`, `scaler`, `device`                          |
 | Image    | SSL WM               | `model_card_or_path`, `lambda_w`, `nsteps`, `data_aug`, `detection_bits`, `device`                         |
 | Image    | WAM                  | `model_card_or_path`, `embedder_cfg_yaml`, `augmenter_cfg_yaml`, `extractor_cfg_yaml`, `do_attenuation`, `attenuation_cfg_yaml`, `scaling_w`, `color`, `interpolation`, `extractor_model`,  `detection_bits`, `nbits`, `device`                         |
+| Image    | PixelSeal            | `model_card_or_path`, `attenuation`, `attenuation_cfg_yaml`, `scaling_w`, `videoseal_chunk_size`, `videoseal_step_size`, `video_aggregation`, `videoseal_mode`, `lowres_attenuation`,  `img_size_proc`, `detection_bits`, `nbits`, `device`                         |
 | Video    | RivaGAN              | `model_card_or_path`, `seq_len`, `nbits`, `keep_last_frames`, `detection_bits`, `device`                   |
 | Video    | VideoSeal            | `model_card_or_path`, `nbits`, `detection_bits`, `scaling_w`, `videoseal_chunk_size`, `videoseal_step_size`, `attenuation`, `attenuation_config`, `video_aggregation`, `videoseal_mode`, `lowres_attenuation`, `time_pooling_depth`, `img_size_proc`, `interpolation`, `device`           |
 
@@ -335,13 +336,6 @@ This will save all examples in the HF-leaderboard compatible format to a subfold
 
 Now refresh the browser and go to "Image" tab, you should see "my_dataset" listed there. CLick to it and switch to "Image Examples". The leaderboard
 will reload the results with your evaluation and dataset. Have fun analysing :) !
-
-
-## 🔥 Omniseal Bench Python API
-
-Besides command line interface, Omniseal Bench is also equipped with a rich set of Python APIs. Please check the notebooks in the folder "[notebooks](./notebooks/)" for
-example usage.
-
 
 # 📃 License
 

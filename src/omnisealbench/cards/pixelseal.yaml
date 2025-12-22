@@ -15,7 +15,7 @@ __deps__:
    - av
 
 # required
-builder_func: omnisealbench.models.videoseal_internal.build_model
+builder_func: omnisealbench.models.pixelseal.build_model
 # model_card_or_path: "/checkpoint/soucek/2025_logs/0926_vseal_aws-dynsize768-aug_size_sweep-discfrom100/_embedder_model=1_augmentation_config=1/checkpoint.pth"
 model_card_or_path: /large_experiments/omniseal/tuantran/benchmark/omniseal/checkpoints/pixelseal/checkpoint.pth
 nbits: 256

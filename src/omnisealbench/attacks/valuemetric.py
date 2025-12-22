@@ -185,7 +185,7 @@ class JPEG(nn.Module):
         else:
             image = self.jpeg_single(image, quality)
         return image, mask
-    
+
     def __repr__(self):
         return f"JPEG"
 

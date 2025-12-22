@@ -7,6 +7,10 @@
 # optional
 name: "mbrs"
 
+__deps__:
+  - einops
+  - opencv-python
+
 # required
 builder_func: omnisealbench.models.mbrs.build_model
 model_card_or_path: '${OMNISEAL_CHECKPOINTS}/mbrs/EC_42.pth'
