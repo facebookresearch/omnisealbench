@@ -54,21 +54,6 @@ You can install only a subset of **OmniSeal Bench** with less dependencies requi
 
     `pip install omnisealbench[leaderboard] -e .`
 
-
-### [Internal FAIR notes - to be removed]: 
-
-To test fairinternal/videoseal or audioseal, install the following extra libraries:
-
-1. For Audioseal, if you want to evaluate internal checkpoints (i.e. for Llama4), install internal Audioseal instead. This is temporary and should be removed in the future, once we upstream all changes to public AudioSeal:
-
-```
-pip install git+https://github.com/fairinternal/audioseal.git
-```
-
-2. For fairinternal/video: Run  `pip install decord pycocotools timm einops opencv-python safetensors av` before installing from https://github.com/fairinternal/videoseal.git
-
-
-
 ### Downloading models
 
 Before running any evaluation, if you want to use the registered models and the default model cards you need to download the checkpoints for the models that require that and dont provide automatic weights download. For this you can run one of the following commands depending on the modality you are using. Make sure to install [gdown](https://github.com/wkentaro/gdown) before running the scripts:
