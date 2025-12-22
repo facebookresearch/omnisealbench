@@ -85,7 +85,7 @@ def test_image_tasks_end_to_end(tmp_path, model_name, result_dir, overwrite, dev
 
     build_test_image_dataset(dataset_dir)
     attacks = [
-        AttackConfig(name="jpeg", data_type="image", args={"quality_factor": 50}),
+        AttackConfig(name="jpeg", data_type="image", args={"quality": 50}),
         AttackConfig(name="gaussian_blur", data_type="image", args={"kernel_size": 13}),
     ]
 
