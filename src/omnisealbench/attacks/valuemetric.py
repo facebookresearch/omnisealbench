@@ -12,7 +12,6 @@ import io
 
 import torch
 import torch.nn as nn
-from omnisealbench.models.wam_src.modules.dist import is_main_process
 import torchvision.transforms as transforms
 import torchvision.transforms.functional as F
 from PIL import Image
@@ -169,8 +168,6 @@ class JPEG(nn.Module):
         return torch.randint(self.min_quality, self.max_quality + 1, size=(1,)).item()
 
     def jpeg_single(self, image, quality):
-        if is_main_process():
-            print(f"Applying JPEG compression with quality={quality}")
         if self.passthrough:
             return (jpeg_compress(image, quality).to(image.device) - image).detach() + image
         else:
