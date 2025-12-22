@@ -3,7 +3,7 @@
 # OmniSeal Bench - Benchmarking Tool for multimodal watermarking models  📚
 </div>
 
-[ [HuggingFace space](https://huggingface.co/spaces/facebook/omnisealbench) ]
+[ [Leaderboard](https://huggingface.co/spaces/facebook/omnisealbench) ]
 [ [Meta Seal](https://facebookresearch.github.io/meta-seal/) ]
 
 OmniSeal Bench is a framework that provides a comprehensive benchmark for evaluating the performance of neural watermarking techniques on image, video and audio contents. The benchmark includes a wide variety of datasets, attacks, evaluation metrics, and an analysis tool to compare different SOTA watermarking models.
