@@ -244,6 +244,7 @@ Full details: [Audio](docs/models/audio.md) , [Image](docs/models/image.md) , [V
 | Image    | PixelSeal            | `model_card_or_path`, `attenuation`, `attenuation_cfg_yaml`, `scaling_w`, `videoseal_chunk_size`, `videoseal_step_size`, `video_aggregation`, `videoseal_mode`, `lowres_attenuation`,  `img_size_proc`, `detection_bits`, `nbits`, `device`                         |
 | Video    | RivaGAN              | `model_card_or_path`, `seq_len`, `nbits`, `keep_last_frames`, `detection_bits`, `device`                   |
 | Video    | VideoSeal            | `model_card_or_path`, `nbits`, `detection_bits`, `scaling_w`, `videoseal_chunk_size`, `videoseal_step_size`, `attenuation`, `attenuation_config`, `video_aggregation`, `videoseal_mode`, `lowres_attenuation`, `time_pooling_depth`, `img_size_proc`, `interpolation`, `device`           |
+| Video+Image    | PixelSeal      | `model_card_or_path`, `nbits`, `detection_bits`, `scaling_w`, `videoseal_chunk_size`, `videoseal_step_size`, `attenuation`, `attenuation_config`, `video_aggregation`, `videoseal_mode`, `lowres_attenuation`, `time_pooling_depth`, `img_size_proc`, `interpolation`, `device`           |
 
 
 ## 🔥 Scaling Evaluation on SLURM clusters:
