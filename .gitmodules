@@ -1,0 +1,3 @@
+[submodule "src/leaderboard_space"]
+	path = src/leaderboard_space
+	url = git@hf.co:spaces/facebook/omnisealbench
