@@ -198,11 +198,11 @@ jobs:
           source .venv_image/bin/activate
           pip install --no-cache-dir --force-reinstall "numpy<2"
           pip install pytest
-          OMNISEAL_CHECKPOINTS=checkpoints pytest -s -v "tests/image/test_api.py::test_image_tasks_end_to_end[True-None-mbrs_jit]"
-          OMNISEAL_CHECKPOINTS=checkpoints pytest -s -v "tests/image/test_api.py::test_image_tasks_end_to_end[True-results_image-mbrs_jit]"
-          OMNISEAL_CHECKPOINTS=checkpoints pytest -s -v "tests/image/test_api.py::test_image_tasks_end_to_end[False-None-mbrs_jit]"
-          OMNISEAL_CHECKPOINTS=checkpoints pytest -s -v "tests/image/test_api.py::test_image_tasks_end_to_end[False-results_image-mbrs_jit]"
-          OMNISEAL_CHECKPOINTS=checkpoints pytest -s -v "tests/image/test_api.py::test_image_wm_pipeline_custom[mbrs_jit]"
+          OMNISEAL_CHECKPOINTS=checkpoints pytest -s -v "tests/image/test_api.py::test_image_tasks_end_to_end[True-None-${{ matrix.model_name }}]"
+          OMNISEAL_CHECKPOINTS=checkpoints pytest -s -v "tests/image/test_api.py::test_image_tasks_end_to_end[True-results_image-${{ matrix.model_name }}]"
+          OMNISEAL_CHECKPOINTS=checkpoints pytest -s -v "tests/image/test_api.py::test_image_tasks_end_to_end[False-None-${{ matrix.model_name }}]"
+          OMNISEAL_CHECKPOINTS=checkpoints pytest -s -v "tests/image/test_api.py::test_image_tasks_end_to_end[False-results_image-${{ matrix.model_name }}]"
+          OMNISEAL_CHECKPOINTS=checkpoints pytest -s -v "tests/image/test_api.py::test_image_wm_pipeline_custom[${{ matrix.model_name }}]"
       - name: Cleanup checkpoints and results
         if: always()
         run: |

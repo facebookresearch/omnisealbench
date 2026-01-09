@@ -101,6 +101,13 @@ fi
 if should_download "mbrs_jit"; then
     mkdir -p "${OMNISEAL_CHECKPOINTS}/mbrs_jit/"
 
+    # Download MBRS first if not already present.
+    if [ ! -f "${OMNISEAL_CHECKPOINTS}/mbrs/EC_42.pth" ]; then
+        gdown https://drive.google.com/uc?id=13R8F_DsmC7firokQ5lSBTkgiuK1naryc -O "${OMNISEAL_CHECKPOINTS}/mbrs/EC_42.pth" # EC_42.pth
+    else
+        echo "Skipping EC_42.pth in mbrs, already exists."
+    fi
+
     if [ ! -f "${OMNISEAL_CHECKPOINTS}/mbrs_jit/mbrs_256_m256_encoder.pt" ] || [ ! -f "${OMNISEAL_CHECKPOINTS}/mbrs_jit/mbrs_256_m256_decoder.pt" ]; then
         echo "Generating MBRS JIT models..."
         python scripts/generate_mbrs_jit.py --export_dir mbrs_jit
