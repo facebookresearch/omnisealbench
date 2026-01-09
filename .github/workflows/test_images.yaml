@@ -164,7 +164,7 @@ jobs:
       fail-fast: false
       matrix:
         python-version: ["3.10"]
-        model_name: [ mbrs ]
+        model_name: [ mbrs_jit ]
     if: needs.pre_check.outputs.audio_or_video != 'true' || needs.pre_check.outputs.image == 'true'
     steps:
       - uses: actions/checkout@v4
@@ -198,11 +198,11 @@ jobs:
           source .venv_image/bin/activate
           pip install --no-cache-dir --force-reinstall "numpy<2"
           pip install pytest
-          OMNISEAL_CHECKPOINTS=checkpoints pytest -s -v "tests/image/test_api.py::test_image_tasks_end_to_end[True-None-mbrs]"
-          OMNISEAL_CHECKPOINTS=checkpoints pytest -s -v "tests/image/test_api.py::test_image_tasks_end_to_end[True-results_image-mbrs]"
-          OMNISEAL_CHECKPOINTS=checkpoints pytest -s -v "tests/image/test_api.py::test_image_tasks_end_to_end[False-None-mbrs]"
-          OMNISEAL_CHECKPOINTS=checkpoints pytest -s -v "tests/image/test_api.py::test_image_tasks_end_to_end[False-results_image-mbrs]"
-          OMNISEAL_CHECKPOINTS=checkpoints pytest -s -v "tests/image/test_api.py::test_image_wm_pipeline_custom[mbrs]"
+          OMNISEAL_CHECKPOINTS=checkpoints pytest -s -v "tests/image/test_api.py::test_image_tasks_end_to_end[True-None-${{ matrix.model_name }}]"
+          OMNISEAL_CHECKPOINTS=checkpoints pytest -s -v "tests/image/test_api.py::test_image_tasks_end_to_end[True-results_image-${{ matrix.model_name }}]"
+          OMNISEAL_CHECKPOINTS=checkpoints pytest -s -v "tests/image/test_api.py::test_image_tasks_end_to_end[False-None-${{ matrix.model_name }}]"
+          OMNISEAL_CHECKPOINTS=checkpoints pytest -s -v "tests/image/test_api.py::test_image_tasks_end_to_end[False-results_image-${{ matrix.model_name }}]"
+          OMNISEAL_CHECKPOINTS=checkpoints pytest -s -v "tests/image/test_api.py::test_image_wm_pipeline_custom[${{ matrix.model_name }}]"
       - name: Cleanup checkpoints and results
         if: always()
         run: |
