@@ -104,6 +104,7 @@ if should_download "mbrs_jit"; then
     # Download MBRS first if not already present.
     if [ ! -f "${OMNISEAL_CHECKPOINTS}/mbrs/EC_42.pth" ]; then
         echo "download EC_42"
+        mkdir -p "${OMNISEAL_CHECKPOINTS}/mbrs/"
         gdown https://drive.google.com/uc?id=13R8F_DsmC7firokQ5lSBTkgiuK1naryc -O "${OMNISEAL_CHECKPOINTS}/mbrs/EC_42.pth" # EC_42.pth
     else
         echo "Skipping EC_42.pth in mbrs, already exists."
