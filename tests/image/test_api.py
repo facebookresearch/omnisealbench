@@ -25,10 +25,10 @@ image_models = {
         "nbits": 100,
         "detection_bits": 16,
     },
-    "mbrs": {
-        "nbits": 256,
-        "detection_bits": 16,
-    },
+    # "mbrs": {
+    #     "nbits": 256,
+    #     "detection_bits": 16,
+    # },
     "trustmark": {
         "nbits": 40,
         "detection_bits": 0,  
