@@ -25,7 +25,7 @@ image_models = {
         "nbits": 100,
         "detection_bits": 16,
     },
-    "mbrs": {
+    "mbrs_jit": {
         "nbits": 256,
         "detection_bits": 16,
     },
